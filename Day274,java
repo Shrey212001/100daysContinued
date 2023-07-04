@@ -1,0 +1,99 @@
+/*
+
+Topic:- Mandragora Forest
+
+Link:- https://www.hackerrank.com/challenges/mandragora/problem?isFullScreen=true
+
+Problem:-
+
+The evil forest is guarded by vicious mandragoras. Garnet and her pet must make a journey through. She starts with 1 health point (s) and 0 experience points.
+
+As she encouters each mandragora, her choices are:
+
+1. Garnet's pet eats mandragora i. This increments s by 1 and defeats mandragora i.
+2.Garnet's pet battles mandragora i. This increases p by s * H[i] experience points and defeats mandragora i.
+Once she defeats a mandragora, it is out of play. Given a list of mandragoras with various health levels, determine the maximum number of experience points she can collect on her journey.
+
+For example, as always, she starts out with s=1 health point and  p=0experience points. Mandragoras have the following health values: H = [3,2,5]. For each of the beings, she has two choices, eat or battle. We have the following permutations of choices and outcomes:
+
+Action  s   p
+_______ _   __
+e, e, e 4   0
+e, e, b 3   15
+e, b, b 2   14
+b, b, b 1   10
+b, b, e 2   10
+b, e, e 3   9
+b, e, b 2   16
+e, b, e 3   6
+Working through a couple of rows, first, her pet can eat all three and she does not gain any experience points. In the second row, her pet eats the first two to have 1+2 =3 health points, then battles the beast with 5 heatlth points to gain 3*5=15 experience points. We see that the best option is to eat the beast with 2 points and battle the others to achieve 2*(3+5) = 16 experience points.
+
+Function Description
+
+Complete the mandragora function in the editor below. It must return an integer that denotes the maximum number of experience points that Garnet can earn.
+
+mandragora has the following parameter(s):
+
+H: an array of integers that represents the health values of mandragoras
+
+Input Format
+
+The first line contains an integer, t, denoting the number of test cases. Each test case is described over two lines:
+
+1.The first line contains a single integer n, the number of mandragoras in the forest.
+2.The second line containsn  space-separated integers describing the respective health points for the mandragoras H[H[1],H[2]...H[n]].
+
+Constraints
+1 <= t <= 10^5
+
+Output Format
+
+For each test case, print a single line with an integer denoting the maximum number of experience points that Garnet can earn.
+
+Sample Input
+
+1
+3
+3 2 2
+Sample Output
+
+10 
+
+
+
+
+Solution:-
+*/
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int t = in.nextInt();
+        for (int testCase = 0; testCase < t; testCase++) {
+            int n = in.nextInt();
+            List<Long> healths = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                healths.add(in.nextLong());
+            }
+            Collections.sort(healths);
+            long maxExp = 0;
+            long totalHealth = 0;
+            long totalStrength = n + 1;
+            for (int i = n - 1; i >= 0; i--) {
+                totalStrength--;
+                totalHealth += healths.get(i);
+                long exp = totalStrength * totalHealth;
+                if (exp > maxExp) {
+                    maxExp = exp;
+                }
+            }
+            System.out.println(maxExp);
+        }
+    }
+}
